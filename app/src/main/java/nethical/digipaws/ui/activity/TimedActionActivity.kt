@@ -91,12 +91,13 @@ class TimedActionActivity : AppCompatActivity() {
 
         dialogAddToTimedActionBinding = DialogAddTimedActionBinding.inflate(layoutInflater)
 
-        dialogAddToTimedActionBinding.picker.startTime = TimeRangePicker.Time(6, 30)
-        dialogAddToTimedActionBinding.picker.endTime = TimeRangePicker.Time(22, 0)
+        var startTimeInMins: Int = TimeRangePicker.Time(6, 30).totalMinutes
+        var endTimeInMins: Int = TimeRangePicker.Time(22, 0).totalMinutes
 
         dialogAddToTimedActionBinding.picker.hourFormat = TimeRangePicker.HourFormat.FORMAT_24
-        var endTimeInMins: Int? = dialogAddToTimedActionBinding.picker.endTimeMinutes
-        var startTimeInMins: Int? = dialogAddToTimedActionBinding.picker.startTimeMinutes
+
+        dialogAddToTimedActionBinding.picker.startTimeMinutes = startTimeInMins
+        dialogAddToTimedActionBinding.picker.endTimeMinutes = endTimeInMins
 
         dialogAddToTimedActionBinding.picker.setOnTouchListener { v, event ->
             // Disable ScrollView's touch interception when interacting with the picker
