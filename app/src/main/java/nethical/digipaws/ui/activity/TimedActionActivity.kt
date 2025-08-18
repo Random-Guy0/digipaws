@@ -20,6 +20,7 @@ import nethical.digipaws.R
 import nethical.digipaws.databinding.ActivityAddTimedActionActivityBinding
 import nethical.digipaws.databinding.CheatHourItemBinding
 import nethical.digipaws.databinding.DialogAddTimedActionBinding
+import nethical.digipaws.services.AppBlockerService
 import nethical.digipaws.utils.SavedPreferencesLoader
 import nethical.digipaws.utils.TimeTools
 import nl.joery.timerangepicker.TimeRangePicker
@@ -253,11 +254,15 @@ class TimedActionActivity : AppCompatActivity() {
 
     private fun saveList() {
         when (selectedMode) {
-            MODE_APP_BLOCKER_CHEAT_HOURS -> savedPreferencesLoader.saveAppBlockerCheatHoursList(
-                timedActionList
-            )
+            MODE_APP_BLOCKER_CHEAT_HOURS -> {
+                savedPreferencesLoader.saveAppBlockerCheatHoursList(timedActionList)
+                sendBroadcast(Intent(AppBlockerService.INTENT_ACTION_REFRESH_APP_BLOCKER))
+            }
 
-            MODE_AUTO_FOCUS -> savedPreferencesLoader.saveAutoFocusHoursList(timedActionList)
+            MODE_AUTO_FOCUS -> {
+                savedPreferencesLoader.saveAutoFocusHoursList(timedActionList)
+                sendBroadcast(Intent(AppBlockerService.INTENT_ACTION_REFRESH_FOCUS_MODE))
+            }
         }
     }
 
